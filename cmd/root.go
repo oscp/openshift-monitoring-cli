@@ -17,7 +17,6 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"path/filepath"
 	"encoding/json"
 	"runtime"
 
@@ -26,6 +25,7 @@ import (
 	"github.com/spf13/viper"
 	"github.com/oscp/openshift-monitoring-checks/checks"
 	"strings"
+	"path"
 )
 
 var pretty bool
@@ -98,21 +98,20 @@ func initLogging() {
 }
 
 func initConfig() {
-	dir, _ := filepath.Abs(filepath.Dir(os.Args[0]))
+	_, filename, _, _ := runtime.Caller(0)
 
-	viper.AddConfigPath(".")
-	viper.AddConfigPath(dir)
+	viper.AddConfigPath(path.Dir(filename)+"/..")
 	viper.SetConfigName("config")
 
 	if err := viper.ReadInConfig(); err != nil {
-		log.Error("Not able to read config file", viper.ConfigFileUsed()+".")
+		log.Error("Not able to read config file (path of script is ", path.Dir(filename)+")", viper.ConfigFileUsed()+".")
 	}
 
 }
 
 func createEvent(err error) map[string]interface{} {
 	var event = map[string]interface{}{}
-	event["message"] = err.Error()
+	event["summary"] = err.Error()
 	return event
 }
 
