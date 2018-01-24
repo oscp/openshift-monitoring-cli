@@ -1,0 +1,13 @@
+node:
+  type: <node|master|storage>
+logging:
+  level: <info|debug>
+etcd:
+  ips: <https://ip:port>,<https://ip:port>,<https://ip:port>
+registry:
+  ip: <ip>
+router:
+  ips: <ip>,<ip>
+externalSystemUrl: <https://url>
+hawcularIP: <ip>
+projectsWithoutLimits: <integer>
