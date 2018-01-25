@@ -3,7 +3,7 @@ go:
 - 1.8.x
 
 before_install:
-  - go get github.com/mitchellh/gox
+- go get github.com/mitchellh/gox
 
 install:
 - go get github.com/mitchellh/mapstructure
@@ -13,15 +13,15 @@ install:
 - go get github.com/oscp/openshift-monitoring-checks/checks
 
 script:
-  - gox -osarch="linux/amd64" -output "./dist/{{.Dir}}" github.com/oscp/openshift-monitoring-cli
-  - tar -zcvf ose-mon-cli.tar.gz dist
+- gox -osarch="linux/amd64" -output "./dist/{{.Dir}}" github.com/oscp/openshift-monitoring-cli
+- tar -zcvf ose-mon-cli.tar.gz dist
 
 deploy:
   provider: releases
   api_key:
-    secure: fk1WqHNOZm5cCXRQZ1wleFxP7lORnuZ5xqJLjyJmaw+APX25c3XL1ASiv004Ied7fNTqCzjLJMfntuDK4y/zkyE26p6p/7GvRYq+j6ejSA3w60UqzYPckA5kp21T2Kb2eED2LXJ1TaTlnJxCP+vXpHQUYeqZ45i5Dimq1TlIUOlBmBKQCCOucNB52RA62+919W1fB0hjKH1X9YSpO/uwf/BCbqWKzGLNz6zHE9+wIzRgAEpTgccEIkXOoxoNWGWv9Gbbe8t206qND+mscogiK3bDhJjoAW4SaQe2ZHf0H9cNN3f0S5FaAMZLEfVz6d7rDAsyTnSgEyPCRP0i9HjQMRwkPiXvtcZBfKS0C6rpbQVw+vhWL2AvPXUhHKVS2+g82+qQ+eOUqA3MOPPAMcMesNWuNSzE6sb6EZ6Z9bzL+FFAq1nZZkj/zGlsbhFxiCOVXWpUuHNnMJFZdcpnQrwLgQfcXbMBuiQkS/6oKGiPeiCb2FgfOAqGdDjBW4vyQeja36QNMA4qN2rh6agunKqTyZTEoJFH6FLA5yT2hAJQM4WiTU4WPP4yiz6lsQShhkF8IdQtv+6ST8Y+bJJttI22LLl2ka4f+JnPmMUsMbBOu2KhTj8v2eTPQNrvsf+5VckRgNDQM8K11FUyvGhX/aSFWGGWl7VyD7HjgGMEaR91UhE=
-  file:
-  - "ose-mon-cli.tar.gz"
+    secure: CbO5hou3FCTx/fZHnRuOuVN4xBhlcz4Wt1RlwP9HR0h4Gop9WDNQ+f/llvh7i3M1/0WdGw8/uxObL/NAQ+TMy0GTF0gaEt1spnrlyp+xE02OF1HGcJV/PAsZbpyyY7GYOS+uSJ221OY2J9rYCgYticVMW+q0ZVvI27bQs0jmVh8+pDxvw85vZIW9nyVImKSODvSXpfx9QnmZMFRlnbyO9w0jVR236Ux5e7ADozEYvJsFzElgMLCJ7tO8bsT7blF74JwkaI82tffppmKRxcASwS93xLdBqLntOQJbqD5Pgle40hO73Z6I06wTSmjY7+Jb4x5btkjiyNRWh4EgIqtBsuFdhwNpCA1akjBdlIVPQ6chByF2MJbarUJqkZwdMgHpq7PcUnEQF1X0ikzKQexULV0OLuIhsrpFpHTD3f0VP+cYn1bpm3RvT2QjjzcUgx3EQSiVX98iag+2GSkTYw8Gwt3lSAWbO7UzKdkhegI4T8/Yygwevdri1DM+bqPtRPJDtgPbNjjIH0oxHP1FIZX2WfAIuz0+lx0kAGccD0Xff98neXs0f2DTXEB5dTop8l3LyeyDqXnZJLbQmIvbp0Ox4camydvi6vrL8rEc+dTv1Cmw3A2kun0Oc94jNOncx0BsS2myIuQ22yJOOJEaKDZ3IJ1ZXbYGZzVSR6u85+I96BM=
+  file: ose-mon-cli.tar.gz
   skip_cleanup: true
   on:
     tags: true
+    
