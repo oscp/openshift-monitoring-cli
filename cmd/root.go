@@ -19,13 +19,13 @@ import (
 	"os"
 	"encoding/json"
 	"runtime"
+	"strings"
+	"path/filepath"
 
 	"github.com/op/go-logging"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/oscp/openshift-monitoring-checks/checks"
-	"strings"
-	"path"
 )
 
 var pretty bool
@@ -98,13 +98,18 @@ func initLogging() {
 }
 
 func initConfig() {
-	_, filename, _, _ := runtime.Caller(0)
+	ex, err := os.Executable()
 
-	viper.AddConfigPath(path.Dir(filename)+"/..")
+	if err != nil {
+		log.Critical(err)
+		os.Exit(1)
+	}
+
+	viper.AddConfigPath(filepath.Dir(ex))
 	viper.SetConfigName("config")
 
 	if err := viper.ReadInConfig(); err != nil {
-		log.Error("Not able to read config file (path of script is ", path.Dir(filename)+")", viper.ConfigFileUsed()+".")
+		log.Error("Not able to read config file (path of script is", filepath.Dir(ex)+")", "config.yml.")
 	}
 
 }
