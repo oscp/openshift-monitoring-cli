@@ -144,8 +144,10 @@ func runChecks(cmd *cobra.Command, args []string) {
 		Events:             make([]EventData, 0),
 	}
 
-	if len(viper.GetString("etcd.ips")) == 0 || len(viper.GetString("registry.ip")) == 0 || len(viper.GetString("router.ips")) == 0 {
-		log.Fatal("Can't read service IPs from configuration file.")
+	if viper.GetString("node.type") == "master" {
+		if len(viper.GetString("etcd.ips")) == 0 || len(viper.GetString("registry.ip")) == 0 || len(viper.GetString("router.ips")) == 0 {
+			log.Fatal("Can't read service IPs from configuration file.")
+		}
 	}
 
 	/////////////////
