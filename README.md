@@ -30,6 +30,7 @@ openshift-monitoring-cli
 |         |               | Checks if local master api is healthy                    
 |         |               | Check if dns is ok via kubernetes & dnsmasq             
 | STORAGE | MINOR         | Checks if open-files count is higher than 200'000 files  
+|         |               | Checks ntpd synchronization status                       
 |         |               | Checks every lvs-pool size. Is the value above 80%?      
 |         |               | Checks every VG has at least 10% free storage            
 |         |               | Checks if every specified mount path has at least 15% free storage            
