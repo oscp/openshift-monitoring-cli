@@ -15,17 +15,17 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
-	"encoding/json"
+	"path/filepath"
 	"runtime"
 	"strings"
-	"path/filepath"
 
 	"github.com/op/go-logging"
+	"github.com/oscp/openshift-monitoring-checks/checks"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/oscp/openshift-monitoring-checks/checks"
 )
 
 var pretty bool
@@ -206,7 +206,7 @@ func runChecks(cmd *cobra.Command, args []string) {
 
 		if len(viper.GetString("registry.ip")) > 0 {
 			if err := checks.CheckRegistryHealth(viper.GetString("registry.ip")); err != nil {
-			data.Events = append(data.Events, createMajorEvent(err))
+				data.Events = append(data.Events, createMajorEvent(err))
 			}
 		}
 
