@@ -118,6 +118,8 @@ func initConfig() {
 
 	if err := viper.ReadInConfig(); err != nil {
 		log.Error("Not able to read config file (path of script is", filepath.Dir(ex)+")", "config.yml.")
+		log.Critical(err)
+		os.Exit(1)
 	}
 
 }
@@ -184,6 +186,7 @@ func runChecks(cmd *cobra.Command, args []string) {
 		evalMajor(func() error { return checks.CheckDockerPool(90) })
 		evalMajor(func() error { return checks.CheckDnsNslookupOnKubernetes() })
 		evalMajor(func() error { return checks.CheckDnsServiceNode() })
+		evalMajor(func() error { return checks.CheckSslCertificates(viper.GetStringSlice("certs.paths.node"), viper.GetInt("certs.majorDays")) })
 	}
 
 	// majors on master
@@ -204,6 +207,7 @@ func runChecks(cmd *cobra.Command, args []string) {
 		evalMajor(func() error { return checks.CheckMasterApis("https://localhost:8443/api") })
 		evalMajor(func() error { return checks.CheckDnsNslookupOnKubernetes() })
 		evalMajor(func() error { return checks.CheckDnsServiceNode() })
+		evalMajor(func() error { return checks.CheckSslCertificates(viper.GetStringSlice("certs.paths.master"), viper.GetInt("certs.majorDays")) })
 	}
 
 	/////////////////
@@ -227,6 +231,7 @@ func runChecks(cmd *cobra.Command, args []string) {
 
 		evalMinor(func() error { return checks.CheckDockerPool(80) })
 		evalMinor(func() error { return checks.CheckHttpService(false) })
+		evalMajor(func() error { return checks.CheckSslCertificates(viper.GetStringSlice("certs.paths.node"), viper.GetInt("certs.minorDays")) })
 	}
 
 	// minors on master
@@ -239,6 +244,7 @@ func runChecks(cmd *cobra.Command, args []string) {
 		evalMinor(func() error { return checks.CheckLimitsAndQuotas(viper.GetInt("projectsWithoutLimits")) })
 		evalMinor(func() error { return checks.CheckHttpService(false) })
 		evalMinor(func() error { return checks.CheckLoggingRestartsCount() })
+		evalMajor(func() error { return checks.CheckSslCertificates(viper.GetStringSlice("certs.paths.master"), viper.GetInt("certs.minorDays")) })
 	}
 
 	log.Debug("Running minor checks for all node types.")

@@ -11,3 +11,13 @@ router:
 externalSystemUrl: <https://url>
 hawcularIP: <ip>
 projectsWithoutLimits: <integer>
+certs:
+  minorDays: 60
+  majorDays: 30
+  paths:
+    master:
+      - <path1>
+      - <path2>
+    node:
+      - <path1>
+      - <path2>
